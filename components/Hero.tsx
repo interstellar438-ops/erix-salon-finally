@@ -22,7 +22,7 @@ export function Hero() {
       id="top"
       className="gradient-cream relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28"
     >
-      <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20 lg:px-10">
+       <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20 lg:px-10 sm:gap-8 sm:flex-col sm:items-start">
         <motion.div style={{ y: textY, opacity }} className="max-w-xl">
           <ScrollReveal delay={0.1}>
             <p className="mb-5 text-[0.78rem] font-medium uppercase tracking-[0.32em] text-gold">

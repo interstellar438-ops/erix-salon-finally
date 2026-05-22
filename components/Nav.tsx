@@ -84,17 +84,20 @@ export function Nav() {
             </a>
           </div>
 
-          <button
-            aria-label="Toggle menu"
-            onClick={() => setOpen((v) => !v)}
-            className={`relative z-[90] grid size-12 place-items-center rounded-2xl border transition-all duration-300 shadow-sm md:hidden ${
-              open || scrolled
-                ? "border-white/10 bg-white/5 text-white hover:bg-white/10"
-                : "border-line bg-surface/90 text-navy hover:bg-surface"
-            }`}
-          >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
+           <button
+             aria-label="Toggle menu"
+             onClick={() => setOpen((v) => !v)}
+             className={`relative z-[90] grid size-14 place-items-center rounded-2xl border transition-all duration-300 shadow-sm md:hidden ${
+               open || scrolled
+                 ? "border-white/10 bg-white/5 text-white hover:bg-white/10"
+                 : "border-line bg-surface/90 text-navy hover:bg-surface"
+             }`}
+             onTouchStart={(e) => e.currentTarget.classList.add('touch-active')}
+             onTouchEnd={(e) => e.currentTarget.classList.remove('touch-active')}
+             onTouchCancel={(e) => e.currentTarget.classList.remove('touch-active')}
+           >
+             {open ? <X size={24} /> : <Menu size={24} />}
+           </button>
         </div>
       </header>
 
@@ -107,21 +110,21 @@ export function Nav() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[80] bg-[#0d0f14] flex flex-col pt-32 px-8 pb-12 md:hidden"
           >
-            <div className="flex flex-col gap-8">
-              {site.nav.map((item, i) => (
-                <motion.a
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="font-serif text-4xl text-white hover:text-gold transition-colors"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-            </div>
+             <div className="flex flex-col gap-6">
+               {site.nav.map((item, i) => (
+                 <motion.a
+                   initial={{ opacity: 0, x: -20 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   transition={{ delay: 0.1 + i * 0.05 }}
+                   key={item.href}
+                   href={item.href}
+                   onClick={() => setOpen(false)}
+                   className="font-serif text-5xl text-white hover:text-gold transition-colors py-4"
+                 >
+                   {item.label}
+                 </motion.a>
+               ))}
+             </div>
 
             <div className="mt-auto space-y-6">
                <div className="h-px w-full bg-white/10" />

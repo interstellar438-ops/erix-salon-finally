@@ -105,6 +105,21 @@ body {
   background: var(--gold);
 }
 
+/* Mobile Touch Optimization */
+.touch-active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Prevent text zoom on iOS when tapping form inputs */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select,
+textarea {
+  font-size: 16px !important;
+}
+
 /* Animations & Special Utilities */
 @keyframes float {
   0%, 100% {

@@ -6,6 +6,7 @@ import { serviceCategories, type ServiceCategory } from "@/lib/site";
 
 export function ServiceTabs() {
   const [active, setActive] = useState<ServiceCategory["id"]>("haircuts");
+  const [mobileAccordionOpen, setMobileAccordionOpen] = useState<ServiceCategory["id"] | null>(null);
   const current = serviceCategories.find((c) => c.id === active)!;
 
   return (
@@ -24,25 +25,95 @@ export function ServiceTabs() {
           </p>
         </div>
 
-        <div className="mt-12 flex justify-start sm:justify-center">
-          <div className="inline-flex overflow-x-auto no-scrollbar rounded-full border border-line bg-surface p-1.5 shadow-sm max-w-full">
-            <div className="flex flex-nowrap">
-              {serviceCategories.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => setActive(c.id)}
-                  className={`whitespace-nowrap rounded-full px-6 py-2.5 text-[0.74rem] font-medium uppercase tracking-[0.2em] transition-all ${
-                    active === c.id
-                      ? "bg-navy text-white shadow"
-                      : "text-ink-muted hover:text-navy"
-                  }`}
-                >
-                  {c.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+         {/* Mobile Accordion & Desktop Tabs */}
+         <div className="mb-8">
+           {/* Mobile Accordion */}
+           <div className="space-y-4 md:hidden">
+             {serviceCategories.map((category) => (
+               <div key={category.id} className="border border-line rounded-xl overflow-hidden">
+                 <button
+                   onClick={() => setMobileAccordionOpen(
+                     mobileAccordionOpen === category.id ? null : category.id
+                   )}
+                   className={`w-full flex items-center justify-between px-6 py-4 text-left font-medium text-[0.9rem] 
+                     ${mobileAccordionOpen === category.id 
+                       ? "bg-navy text-white" 
+                       : "bg-surface text-navy hover:bg-gray-50"}
+                   `}
+                 >
+                   <span>{category.label}</span>
+                   <svg 
+                     className={`h-4 w-4 transition-transform duration-200 ${mobileAccordionOpen === category.id ? "rotate-180" : ""}`}
+                     xmlns="http://www.w3.org/2000/svg" 
+                     fill="none" 
+                     viewBox="0 0 24 24" 
+                     stroke="currentColor"
+                   >
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                       d="M19 9l-7 7-7-7"/>
+                     </svg>
+                 </button>
+                 
+                 {mobileAccordionOpen === category.id && (
+                   <div className="border-t border-line bg-white/5 px-6 py-4">
+                     <div className="space-y-3">
+                       <p className="text-[0.78rem] uppercase tracking-[0.2em] text-gold font-medium">
+                         {category.label}
+                       </p>
+                       <h3 className="mt-2 font-serif text-2xl leading-tight text-navy">
+                         {category.blurb}
+                       </h3>
+                       
+                       <ul className="mt-4 divide-y divide-line">
+                         {category.items.map((item) => (
+                           <li
+                             key={item.name}
+                             className="grid grid-cols-[1fr_auto] items-baseline gap-4 py-3"
+                           >
+                             <div>
+                               <p className="text-[0.85rem] font-medium text-navy">
+                                 {item.name}
+                               </p>
+                               {item.note && (
+                                 <p className="mt-1 text-[0.75rem] italic text-ink-muted">
+                                   {item.note}
+                                 </p>
+                               )}
+                             </div>
+                             <span className="text-[0.85rem] font-semibold tracking-wide text-gold">
+                               {item.price}
+                             </span>
+                           </li>
+                         ))}
+                       </ul>
+                     </div>
+                   </div>
+                 )}
+               </div>
+             ))}
+           </div>
+           
+           {/* Desktop Tabs */}
+           <div className="hidden md:block">
+             <div className="inline-flex overflow-x-auto no-scrollbar rounded-full border border-line bg-surface p-1.5 shadow-sm max-w-full">
+               <div className="flex flex-nowrap">
+                 {serviceCategories.map((c) => (
+                   <button
+                     key={c.id}
+                     onClick={() => setActive(c.id)}
+                     className={`whitespace-nowrap rounded-full px-6 py-2.5 text-[0.74rem] font-medium uppercase tracking-[0.2em] transition-all ${
+                       active === c.id
+                         ? "bg-navy text-white shadow"
+                         : "text-ink-muted hover:text-navy"
+                     }`}
+                   >
+                     {c.label}
+                   </button>
+                 ))}
+               </div>
+             </div>
+           </div>
+         </div>
 
         <div
           key={current.id}
